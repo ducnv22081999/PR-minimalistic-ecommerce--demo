@@ -1,0 +1,33 @@
+.filter .filter__name {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #22232b;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  padding-bottom: 20px;
+}
+.filter .filter__select .filter__select__item {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding-left: 0;
+  margin: 10px 0;
+}
+.filter .filter__range .filter__range__name {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #22232b;
+  padding-left: 4px;
+}
+.filter .filter__range .filter__range__input .range__value span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+  color: #22232b;
+}

@@ -1,0 +1,17 @@
+/* header */
+.logo_nav {
+  padding: 12px;
+  background-color: #1b1b1b;
+}
+.menu__item a {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: #22232b;
+}
+.menu__button {
+  color: #22232b;
+}
+/* header */
