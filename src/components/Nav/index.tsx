@@ -10,7 +10,7 @@ const Nav = () => {
           <div className="col-12">
             <nav className="navbar navbar-expand-lg p-0">
               <a className="navbar-brand p-0" href="#">
-                <img className="logo_nav" src={logo} />
+                <img className="logo_nav" src={logo} alt="image" />
               </a>
               <button
                 className="navbar-toggler menu__button"
@@ -46,7 +46,7 @@ const Nav = () => {
                 </ul>
                 <div className="d-flex">
                   <a className="pr-4">
-                    <img src={cartButton} />
+                    <img src={cartButton} alt="image" />
                   </a>
                   <a className="pl-4">Login</a>
                 </div>

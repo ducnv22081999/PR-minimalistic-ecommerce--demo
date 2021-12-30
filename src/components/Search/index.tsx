@@ -10,7 +10,7 @@ const Search = () => {
             {/* search input */}
             <div className="d-flex align-items-center search__input">
               <div className="pr-4 search__input__icon">
-                <img src={logoSearch} />
+                <img src={logoSearch} alt="image" />
               </div>
               <div className="search__input__input">
                 <input

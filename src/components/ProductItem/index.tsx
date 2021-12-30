@@ -12,7 +12,7 @@ const ProductItem = ({ data }: Props) => {
     <div className="col-4 pb-4 product__item__col">
       <div className="product__card">
         <div className="product__img">
-          <img src={product1} />
+          <img src={product1} alt="image" />
         </div>
         <div className="product__body">
           <div className="d-flex align-items-center justify-content-between product__name__price">
@@ -34,7 +34,7 @@ const ProductItem = ({ data }: Props) => {
             </div>
             <div className="product__buy">
               <a>
-                <img src={addCartButton} />
+                <img src={addCartButton} alt="image" />
               </a>
             </div>
           </div>
