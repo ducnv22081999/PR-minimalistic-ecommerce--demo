@@ -1,53 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Abel", sans-serif;
+@import "~antd/dist/antd.css";
+
+/* antd */
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
-.main {
-  padding-top: 20px;
+.site-layout .site-layout-background {
+  background: #fff;
 }
-.main__content {
-  padding-top: 60px;
-}
-
-@media (max-width: 576px) {
-  .search__filter select {
-    margin-left: 0;
-  }
-  .main .container .row .col-3.filter__col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .main .container .row .col-9.content__col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .main .container .row .col-9.search__input__col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .main
-    .container
-    .row
-    .col-9.search__input__col
-    .search__input.search__input__icon {
-    padding-right: 0;
-  }
-  .main .container .row .col-3.search__filter__col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-
-  .main .products .product__item__col {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-
-  .product__item__col,
-  .pagination__col {
-    padding-left: 0;
-    padding-right: 0;
-  }
+[data-theme="dark"] .site-layout .site-layout-background {
+  background: #141414;
 }

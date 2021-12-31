@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import ProductAPI from "../api/productAPI";
 import { RootState } from "../app/store";
 
 export interface IProductItem {
-  _id: string;
+  id: string;
   name: string;
-  category_id: number;
-  price: number;
+  categoryId: string;
   rating: number;
-  url_image: string;
+  price: number;
+  thumbnail_cdn: string;
 }
 
 export interface ProductState {
@@ -15,80 +16,60 @@ export interface ProductState {
 }
 
 const initialState: ProductState = {
-  products: [
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-    {
-      _id: "1",
-      name: "Coombes",
-      category_id: 2,
-      price: 2.6,
-      rating: 4,
-      url_image: "https://via.placeholder.com/300x257",
-    },
-  ],
+  products: [],
 };
+
+export const getProducts = createAsyncThunk("product/getProducts", async () => {
+  const response = await ProductAPI.getAll();
+  return response.data;
+});
+//
+export const addProduct = createAsyncThunk(
+  "product/addProduct",
+  async (itemProduct: IProductItem) => {
+    const response = await ProductAPI.addProduct(itemProduct);
+    return response.data;
+  }
+);
+//
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (idProduct: string) => {
+    console.log(idProduct);
+    const response = await ProductAPI.deleteProduct(idProduct);
+    return response.data;
+  }
+);
 
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    // getProducts: (state, action: PayloadAction<IProductItem[]>) => {
+    //   return {
+    //     ...state,
+    //     products: [...action.payload],
+    //   };
+    // },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getProducts.fulfilled, (state, action) => {
+      state.products = [...action.payload];
+    });
+    //
+    builder.addCase(addProduct.fulfilled, (state, action) => {
+      state.products = [...state.products, action.payload];
+    });
+    //
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
+      state.products = state.products.filter(
+        (product) => product.id !== action.payload.id
+      );
+    });
+  },
 });
 
 export const selectProducts = (state: RootState) => state.product.products;
 
+// export const { getProducts } = productSlice.actions;
 export default productSlice.reducer;

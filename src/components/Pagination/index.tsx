@@ -5,7 +5,7 @@ const Pagination = () => {
     <div className="pagination">
       <div className="container">
         <div className="row">
-          <div className="col-12 d-flex justify-content-end pagination__col">
+          <div className="col-12 d-flex justify-content-center pagination__col">
             <nav aria-label="Page navigation example">
               <ul className="pagination">
                 <li className="page-item">

@@ -18,7 +18,7 @@ const ProductItem = ({ data }: Props) => {
           <div className="d-flex align-items-center justify-content-between product__name__price">
             <div className="product__name">
               <h3 className="name">{data.name}</h3>
-              <span className="info">{data.category_id}</span>
+              <span className="info">{data.categoryId}</span>
             </div>
             <div className="product__price">
               <h4 className="price">${data.price}</h4>
