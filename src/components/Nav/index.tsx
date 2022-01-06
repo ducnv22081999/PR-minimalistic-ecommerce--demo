@@ -1,6 +1,7 @@
 import "./Nav.css";
 import logo from "./../assets/img/logo.png";
 import cartButton from "./../assets/img/cart-button.png";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -9,9 +10,9 @@ const Nav = () => {
         <div className="row">
           <div className="col-12">
             <nav className="navbar navbar-expand-lg p-0">
-              <a className="navbar-brand p-0" href="#">
+              <Link to="/" className="navbar-brand p-0">
                 <img className="logo_nav" src={logo} alt="image" />
-              </a>
+              </Link>
               <button
                 className="navbar-toggler menu__button"
                 type="button"

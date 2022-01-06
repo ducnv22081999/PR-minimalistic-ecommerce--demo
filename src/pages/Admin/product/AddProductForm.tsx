@@ -39,6 +39,7 @@ const AddProductForm = () => {
   const [nameProduct, setNameProduct] = useState("");
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
+  const [quantilyProduct, setQuantilyProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
   const [imageProduct, setImageProduct] = useState<any>();
@@ -60,6 +61,7 @@ const AddProductForm = () => {
         name: nameProduct,
         category_id: categoryProduct,
         rating: ratingProduct,
+        quantily: quantilyProduct,
         price: priceProduct,
         description: descriptionProduct,
         thumbnail_cdn: imageProduct[0].originFileObj,
@@ -119,6 +121,14 @@ const AddProductForm = () => {
         </Select>
       </Form.Item>
 
+      <Form.Item label="Quantily" required>
+        <Input
+          placeholder="Số lượng..."
+          value={quantilyProduct}
+          onChange={(e) => setQuantilyProduct(e.target.value)}
+        />
+      </Form.Item>
+
       <Form.Item label="Price" required>
         <Input
           placeholder="Giá tiền..."
@@ -130,6 +140,7 @@ const AddProductForm = () => {
       <Form.Item label="Description" required>
         <TextArea
           rows={4}
+          value={descriptionProduct}
           onChange={(e) => setDescriptionProduct(e.target.value)}
         />
       </Form.Item>

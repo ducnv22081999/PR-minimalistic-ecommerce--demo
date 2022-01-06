@@ -41,6 +41,7 @@ const EditProductForm = () => {
   const [nameProduct, setNameProduct] = useState("");
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
+  const [quantilyProduct, setQuantilyProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
   const [imageProduct, setImageProduct] = useState<any>();
@@ -65,6 +66,7 @@ const EditProductForm = () => {
         setNameProduct(product[0].name);
         setCategoryProduct(product[0].category_id);
         setRatingProduct(product[0].rating);
+        setQuantilyProduct(product[0].quantily);
         setPriceProduct(product[0].price);
         setDescriptionProduct(product[0].description);
         // setImageProduct(product[0].thumbnail_cdn);
@@ -84,6 +86,7 @@ const EditProductForm = () => {
         name: nameProduct,
         category_id: categoryProduct,
         rating: ratingProduct,
+        quantily: quantilyProduct,
         price: priceProduct,
         description: descriptionProduct,
         thumbnail_cdn: imageProduct,
@@ -142,6 +145,14 @@ const EditProductForm = () => {
         </Select>
       </Form.Item>
 
+      <Form.Item label="Quantily" required>
+        <Input
+          placeholder="Số lượng..."
+          value={quantilyProduct}
+          onChange={(e) => setQuantilyProduct(e.target.value)}
+        />
+      </Form.Item>
+
       <Form.Item label="Price" required>
         <Input
           placeholder="Giá tiền..."
@@ -153,6 +164,7 @@ const EditProductForm = () => {
       <Form.Item label="Description" required>
         <TextArea
           rows={4}
+          value={descriptionProduct}
           onChange={(e) => setDescriptionProduct(e.target.value)}
         />
       </Form.Item>

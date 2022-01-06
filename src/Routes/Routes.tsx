@@ -47,7 +47,7 @@ const Routes = (props: any) => {
                 <Route exact path="/">
                   <HomePage {...props} />
                 </Route>
-                <Route exact path="/:id">
+                <Route exact path="/:slug.:id">
                   <ProductItemDetail />
                 </Route>
                 <Route path="*">

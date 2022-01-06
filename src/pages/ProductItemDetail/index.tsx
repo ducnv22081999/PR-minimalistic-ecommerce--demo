@@ -28,18 +28,19 @@ const ProductItemDetail = () => {
   useEffect(() => {
     const getProductById = async () => {
       if (id && productList) {
-        const product = await productList.map((product) => {
+        await productList.map((product) => {
           if (product._id === id) setItemProduct(product);
         });
       }
     };
-
     if (productList) {
       getProductById();
     } else {
       dispatch(getProductList);
     }
   }, [productList]);
+
+  console.log(itemProduct);
 
   return (
     <>
@@ -57,6 +58,9 @@ const ProductItemDetail = () => {
               {itemProduct && <Title level={1}>{itemProduct.name}</Title>}
               {itemProduct && (
                 <Title level={5}>{itemProduct.description}</Title>
+              )}
+              {itemProduct && (
+                <Title level={5}>Số lượng: {itemProduct.quantily}</Title>
               )}
             </div>
           </div>

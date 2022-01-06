@@ -16,7 +16,7 @@ const ProductItem = ({ data, categories }: Props) => {
     <div className="col-4 pb-4 product__item__col">
       <div className="product__card">
         <div className="product__img">
-          <Link to={`/${data._id}`}>
+          <Link to={`/${data.slug}.${data._id}`}>
             <img
               src={`http://localhost:6969/api/product/photo/${data._id}`}
               alt="image"
@@ -26,7 +26,7 @@ const ProductItem = ({ data, categories }: Props) => {
         <div className="product__body">
           <div className="d-flex align-items-center justify-content-between product__name__price">
             <div className="product__name">
-              <Link to={`/${data._id}`}>
+              <Link to={`/${data.slug}.${data._id}`}>
                 <h3 className="name">{data.name}</h3>
               </Link>
               <span className="info">

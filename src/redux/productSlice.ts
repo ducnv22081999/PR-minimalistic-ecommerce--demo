@@ -7,8 +7,10 @@ export interface IProductItem {
   name: string;
   category_id: string;
   rating: string;
+  quantily: string;
   price: string;
   description: string;
+  slug: string;
   thumbnail_cdn: string;
 }
 
@@ -30,7 +32,7 @@ export const getProductList = createAsyncThunk(
 //
 export const addProduct = createAsyncThunk(
   "product/addProduct",
-  async (itemProduct: Omit<IProductItem, "_id">) => {
+  async (itemProduct: Omit<IProductItem, "_id" | "slug">) => {
     const response = await ProductAPI.addProduct(itemProduct);
     return response.data;
   }
@@ -46,7 +48,7 @@ export const deleteProduct = createAsyncThunk(
 //
 export const updateProduct = createAsyncThunk(
   "product/updateProduct",
-  async (itemProduct: IProductItem) => {
+  async (itemProduct: Omit<IProductItem, "slug">) => {
     const response = await ProductAPI.updateProduct(itemProduct);
     return response.data;
   }

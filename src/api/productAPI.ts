@@ -6,11 +6,12 @@ const ProductAPI = {
     const url = `/product`;
     return axiosClient.get(url);
   },
-  addProduct(itemProduct: Omit<IProductItem, "_id">) {
+  addProduct(itemProduct: Omit<IProductItem, "_id" | "slug">) {
     const formData = new FormData();
     formData.append("name", itemProduct.name);
     formData.append("category_id", itemProduct.category_id);
     formData.append("rating", itemProduct.rating);
+    formData.append("quantily", itemProduct.quantily);
     formData.append("price", itemProduct.price);
     formData.append("description", itemProduct.description);
     formData.append("thumbnail_cdn", itemProduct.thumbnail_cdn);
@@ -24,7 +25,7 @@ const ProductAPI = {
     const url = `/product/${idProduct}`;
     return axiosClient.delete(url);
   },
-  updateProduct(itemProduct: IProductItem) {
+  updateProduct(itemProduct: Omit<IProductItem, "slug">) {
     const url = `/product/${itemProduct._id}`;
     return axiosClient.put(url, itemProduct);
   },
