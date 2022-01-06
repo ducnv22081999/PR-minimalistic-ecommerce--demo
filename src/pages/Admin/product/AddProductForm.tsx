@@ -14,6 +14,7 @@ type RequiredMark = boolean | "optional";
 const AddProductForm = () => {
   const [form] = Form.useForm();
   const { Option } = Select;
+  const { TextArea } = Input;
 
   const [requiredMark, setRequiredMarkType] =
     useState<RequiredMark>("optional");
@@ -39,6 +40,7 @@ const AddProductForm = () => {
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
+  const [descriptionProduct, setDescriptionProduct] = useState("");
   const [imageProduct, setImageProduct] = useState<any>();
 
   const dispatch = useDispatch();
@@ -59,6 +61,7 @@ const AddProductForm = () => {
         category_id: categoryProduct,
         rating: ratingProduct,
         price: priceProduct,
+        description: descriptionProduct,
         thumbnail_cdn: imageProduct[0].originFileObj,
       })
     );
@@ -121,6 +124,13 @@ const AddProductForm = () => {
           placeholder="Giá tiền..."
           value={priceProduct}
           onChange={(e) => setPriceProduct(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Description" required>
+        <TextArea
+          rows={4}
+          onChange={(e) => setDescriptionProduct(e.target.value)}
         />
       </Form.Item>
 

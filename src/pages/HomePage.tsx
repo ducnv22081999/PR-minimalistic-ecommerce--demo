@@ -9,7 +9,7 @@ import "./HomePage.css";
 const HomePage = () => {
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="main">
         <Search />
         <div className="main__content">

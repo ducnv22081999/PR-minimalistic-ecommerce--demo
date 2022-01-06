@@ -16,6 +16,7 @@ type RequiredMark = boolean | "optional";
 const EditProductForm = () => {
   const [form] = Form.useForm();
   const { Option } = Select;
+  const { TextArea } = Input;
 
   const [requiredMark, setRequiredMarkType] =
     useState<RequiredMark>("optional");
@@ -41,6 +42,7 @@ const EditProductForm = () => {
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
+  const [descriptionProduct, setDescriptionProduct] = useState("");
   const [imageProduct, setImageProduct] = useState<any>();
 
   interface IId {
@@ -62,8 +64,9 @@ const EditProductForm = () => {
         );
         setNameProduct(product[0].name);
         setCategoryProduct(product[0].category_id);
-        setRatingProduct(`${product[0].rating}`);
-        setPriceProduct(`${product[0].price}`);
+        setRatingProduct(product[0].rating);
+        setPriceProduct(product[0].price);
+        setDescriptionProduct(product[0].description);
         // setImageProduct(product[0].thumbnail_cdn);
       }
     };
@@ -82,6 +85,7 @@ const EditProductForm = () => {
         category_id: categoryProduct,
         rating: ratingProduct,
         price: priceProduct,
+        description: descriptionProduct,
         thumbnail_cdn: imageProduct,
       })
     );
@@ -143,6 +147,13 @@ const EditProductForm = () => {
           placeholder="Giá tiền..."
           value={priceProduct}
           onChange={(e) => setPriceProduct(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Description" required>
+        <TextArea
+          rows={4}
+          onChange={(e) => setDescriptionProduct(e.target.value)}
         />
       </Form.Item>
 

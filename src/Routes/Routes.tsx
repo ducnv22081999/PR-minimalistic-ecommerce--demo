@@ -8,6 +8,9 @@ import HomePage from "../pages/HomePage";
 import EditProductForm from "../pages/Admin/product/EditProductForm";
 import AddCategoryForm from "../pages/Admin/category/AddCategoryForm";
 import EditCategoryForm from "../pages/Admin/category/EditCategoryForm";
+import Nav from "../components/Nav";
+import ProductItemDetail from "../pages/ProductItemDetail";
+import Error404 from "../pages/Error404";
 
 const Routes = (props: any) => {
   return (
@@ -39,13 +42,17 @@ const Routes = (props: any) => {
           </Route>
           <Route>
             <LayoutWebsite>
+              <Nav />
               <Switch>
                 <Route exact path="/">
                   <HomePage {...props} />
                 </Route>
-                {/* <Route path="*">
+                <Route exact path="/:id">
+                  <ProductItemDetail />
+                </Route>
+                <Route path="*">
                   <Error404 />
-                </Route> */}
+                </Route>
               </Switch>
             </LayoutWebsite>
           </Route>

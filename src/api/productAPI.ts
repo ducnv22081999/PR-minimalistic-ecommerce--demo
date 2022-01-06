@@ -12,6 +12,7 @@ const ProductAPI = {
     formData.append("category_id", itemProduct.category_id);
     formData.append("rating", itemProduct.rating);
     formData.append("price", itemProduct.price);
+    formData.append("description", itemProduct.description);
     formData.append("thumbnail_cdn", itemProduct.thumbnail_cdn);
 
     const url = `/product`;

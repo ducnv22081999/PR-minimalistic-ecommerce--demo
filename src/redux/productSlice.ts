@@ -8,6 +8,7 @@ export interface IProductItem {
   category_id: string;
   rating: string;
   price: string;
+  description: string;
   thumbnail_cdn: string;
 }
 

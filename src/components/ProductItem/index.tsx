@@ -4,6 +4,7 @@ import product1 from "./../assets/img/product1.png";
 import { IProductItem } from "../../redux/productSlice";
 import { getNameCateFromId, ICategoryItem } from "../../redux/categorySlice";
 import { Rate } from "antd";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: IProductItem;
@@ -15,15 +16,19 @@ const ProductItem = ({ data, categories }: Props) => {
     <div className="col-4 pb-4 product__item__col">
       <div className="product__card">
         <div className="product__img">
-          <img
-            src={`http://localhost:6969/api/product/photo/${data._id}`}
-            alt="image"
-          />
+          <Link to={`/${data._id}`}>
+            <img
+              src={`http://localhost:6969/api/product/photo/${data._id}`}
+              alt="image"
+            />
+          </Link>
         </div>
         <div className="product__body">
           <div className="d-flex align-items-center justify-content-between product__name__price">
             <div className="product__name">
-              <h3 className="name">{data.name}</h3>
+              <Link to={`/${data._id}`}>
+                <h3 className="name">{data.name}</h3>
+              </Link>
               <span className="info">
                 {getNameCateFromId(categories, data.category_id)}
               </span>
