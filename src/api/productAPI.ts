@@ -3,19 +3,28 @@ import { axiosClient } from "./axiosClient";
 
 const ProductAPI = {
   getAll() {
-    const url = `/products`;
+    const url = `/product`;
     return axiosClient.get(url);
   },
-  addProduct(itemProduct: IProductItem) {
-    const url = `/products`;
-    return axiosClient.post(url, itemProduct);
+  addProduct(itemProduct: Omit<IProductItem, "_id">) {
+    const formData = new FormData();
+    formData.append("name", itemProduct.name);
+    formData.append("category_id", itemProduct.category_id);
+    formData.append("rating", itemProduct.rating);
+    formData.append("price", itemProduct.price);
+    formData.append("thumbnail_cdn", itemProduct.thumbnail_cdn);
+
+    const url = `/product`;
+    return axiosClient.post(url, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   },
   deleteProduct(idProduct: string) {
-    const url = `/products/${idProduct}`;
+    const url = `/product/${idProduct}`;
     return axiosClient.delete(url);
   },
   updateProduct(itemProduct: IProductItem) {
-    const url = `/products/${itemProduct.id}`;
+    const url = `/product/${itemProduct._id}`;
     return axiosClient.put(url, itemProduct);
   },
 };

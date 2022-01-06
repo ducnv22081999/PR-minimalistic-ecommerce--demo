@@ -1,14 +1,19 @@
-import { useState } from "react";
-import { Form, Input, Button, Radio, Select, Upload } from "antd";
+import { useEffect, useState } from "react";
+import { Form, Input, Button, Select, Upload, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import image from "antd/lib/image";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/productSlice";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getProductList,
+  IProductItem,
+  selectProductList,
+  updateProduct,
+} from "../../../redux/productSlice";
+import { useHistory, useParams } from "react-router-dom";
+import { selectCategories } from "../../../redux/categorySlice";
 
 type RequiredMark = boolean | "optional";
 
-const AddProductForm = () => {
+const EditProductForm = () => {
   const [form] = Form.useForm();
   const { Option } = Select;
 
@@ -28,6 +33,7 @@ const AddProductForm = () => {
     if (Array.isArray(e)) {
       return e;
     }
+    setImageProduct(e.fileList);
     return e && e.fileList;
   };
 
@@ -35,30 +41,51 @@ const AddProductForm = () => {
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
-  const [imageProduct, setImageProduct] = useState("");
+  const [imageProduct, setImageProduct] = useState<any>();
+
+  interface IId {
+    id: string;
+  }
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams<IId>();
+
+  const productList = useSelector(selectProductList);
+  const categories = useSelector(selectCategories);
+
+  useEffect(() => {
+    const getProductById = async () => {
+      if (id && productList) {
+        const product: IProductItem[] = await productList.filter(
+          (product) => product._id === id
+        );
+        setNameProduct(product[0].name);
+        setCategoryProduct(product[0].category_id);
+        setRatingProduct(`${product[0].rating}`);
+        setPriceProduct(`${product[0].price}`);
+        // setImageProduct(product[0].thumbnail_cdn);
+      }
+    };
+    if (productList) {
+      getProductById();
+    } else {
+      dispatch(getProductList);
+    }
+  }, [productList]);
 
   const handleSubmit = () => {
-    console.log({
-      name: nameProduct,
-      categoryId: categoryProduct,
-      rating: +ratingProduct,
-      price: +priceProduct,
-      thumbnail_cdn: imageProduct,
-    });
     dispatch(
-      addProduct({
-        id: "",
+      updateProduct({
+        _id: id,
         name: nameProduct,
-        categoryId: categoryProduct,
-        rating: +ratingProduct,
-        price: +priceProduct,
+        category_id: categoryProduct,
+        rating: ratingProduct,
+        price: priceProduct,
         thumbnail_cdn: imageProduct,
       })
     );
-    history.push("/admin/products");
+    history.push("/admin/product");
   };
 
   return (
@@ -83,12 +110,14 @@ const AddProductForm = () => {
       >
         <Select
           placeholder="Danh mục sản phẩm..."
-          // value={categoryProduct}
+          value={categoryProduct}
           onChange={(e) => setCategoryProduct(e)}
         >
-          <Option value="0">a</Option>
-          <Option value="1">b</Option>
-          <Option value="2">c</Option>
+          {categories.map((category, index) => (
+            <Option key={index} value={category._id}>
+              {category.name}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
@@ -98,7 +127,7 @@ const AddProductForm = () => {
       >
         <Select
           placeholder="Đánh giá sản phẩm..."
-          // value={ratingProduct}
+          value={ratingProduct}
           onChange={(e) => setRatingProduct(e)}
         >
           <Option value="5">Rất tốt</Option>
@@ -124,11 +153,11 @@ const AddProductForm = () => {
         getValueFromEvent={normFile}
         extra=""
       >
-        <Upload
-          name="logo"
-          listType="picture"
-          onChange={(e: any) => setImageProduct(e.file.name)}
-        >
+        <Image
+          width={80}
+          src={`http://localhost:6969/api/product/photo/${id}`}
+        />
+        <Upload name="logo" listType="picture">
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>
@@ -142,4 +171,4 @@ const AddProductForm = () => {
   );
 };
 
-export default AddProductForm;
+export default EditProductForm;

@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LayoutAdmin from "../layout/Admin";
 import LayoutWebsite from "../layout/Website";
-import AddProductForm from "../pages/Admin/ModalProduct";
-import AdminCategories from "../pages/Admin/AdminCategories";
-import AdminProducts from "../pages/Admin/AdminProducts";
+import AddProductForm from "../pages/Admin/product/AddProductForm";
+import AdminCategory from "../pages/Admin/category/AdminCategory";
+import AdminProduct from "../pages/Admin/product/AdminProduct";
 import HomePage from "../pages/HomePage";
-import EditProductModal from "../pages/Admin/EditProductModal";
+import EditProductForm from "../pages/Admin/product/EditProductForm";
+import AddCategoryForm from "../pages/Admin/category/AddCategoryForm";
+import EditCategoryForm from "../pages/Admin/category/EditCategoryForm";
 
 const Routes = (props: any) => {
   return (
@@ -14,30 +16,25 @@ const Routes = (props: any) => {
         <Switch>
           <Route path="/admin/:path?">
             <LayoutAdmin>
-              <Route exact path="/admin/products">
-                <AdminProducts {...props} />
+              <Route exact path="/admin/product">
+                <AdminProduct {...props} />
               </Route>
-              <Route exact path="/admin/categories">
-                <AdminCategories {...props} />
-              </Route>
-
-              <Route exact path="/admin/products/add">
+              <Route exact path="/admin/product/add">
                 <AddProductForm />
               </Route>
-
-              <Route exact path="/admin/products/edit/:id">
-                <EditProductModal />
+              <Route exact path="/admin/product/edit/:id">
+                <EditProductForm />
               </Route>
-              {/*
+
               <Route exact path="/admin/category">
-                <AdminCategory />
+                <AdminCategory {...props} />
               </Route>
               <Route exact path="/admin/category/add">
-                <AddCategory />
+                <AddCategoryForm />
               </Route>
               <Route exact path="/admin/category/edit/:id">
-                <EditCategory />
-              </Route> */}
+                <EditCategoryForm />
+              </Route>
             </LayoutAdmin>
           </Route>
           <Route>

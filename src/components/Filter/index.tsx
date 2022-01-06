@@ -3,7 +3,7 @@ import "./Filter.css";
 
 const Filter = () => {
   const [priceInput, setPriceInput] = useState(0);
-  console.log(priceInput);
+  // console.log(priceInput);
   return (
     <div className="col-3 filter__col">
       <div className="filter">

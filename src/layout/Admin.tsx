@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import {
-  DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
   BarsOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -28,18 +24,23 @@ const LayoutAdmin = (props: any) => {
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-            <SubMenu key="sub1" icon={<PieChartOutlined />} title="Products">
+            <SubMenu key="sub1" icon={<PieChartOutlined />} title="Product">
               <Menu.Item key="1" icon={<BarsOutlined />}>
-                <NavLink to="/admin/products">List Product</NavLink>
+                <NavLink to="/admin/product">List Product</NavLink>
               </Menu.Item>
-              <Menu.Item key="1" icon={<PlusOutlined />}>
-                <NavLink to="/admin/products/add">Add Product</NavLink>
+              <Menu.Item key="2" icon={<PlusOutlined />}>
+                <NavLink to="/admin/product/add">Add Product</NavLink>
               </Menu.Item>
             </SubMenu>
-
-            <Menu.Item key="2" icon={<DesktopOutlined />}>
-              <NavLink to="/admin/categories">Categoryes</NavLink>
-            </Menu.Item>
+            {/*  */}
+            <SubMenu key="sub2" icon={<PieChartOutlined />} title="Category">
+              <Menu.Item key="3" icon={<BarsOutlined />}>
+                <NavLink to="/admin/category">List Category</NavLink>
+              </Menu.Item>
+              <Menu.Item key="4" icon={<PlusOutlined />}>
+                <NavLink to="/admin/category/add">Add Category</NavLink>
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout className="site-layout">

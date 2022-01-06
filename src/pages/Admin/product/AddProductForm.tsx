@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Radio, Select, Upload, Image } from "antd";
+import { Form, Input, Button, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { IProductItem, selectProducts } from "../../redux/productSlice";
-import { useHistory, useParams } from "react-router-dom";
+import { addProduct } from "../../../redux/productSlice";
+import { useHistory } from "react-router-dom";
+import { getCategories, selectCategories } from "../../../redux/categorySlice";
+
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 type RequiredMark = boolean | "optional";
 
-const EditProductModal = () => {
+const AddProductForm = () => {
   const [form] = Form.useForm();
   const { Option } = Select;
 
@@ -27,6 +31,7 @@ const EditProductModal = () => {
     if (Array.isArray(e)) {
       return e;
     }
+    setImageProduct(e.fileList);
     return e && e.fileList;
   };
 
@@ -34,34 +39,34 @@ const EditProductModal = () => {
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
-  const [imageProduct, setImageProduct] = useState("");
-
-  interface IId {
-    id: string;
-  }
+  const [imageProduct, setImageProduct] = useState<any>();
 
   const dispatch = useDispatch();
-  const { id } = useParams<IId>();
+  const history = useHistory();
 
-  const products = useSelector(selectProducts);
+  const categories = useSelector(selectCategories);
 
-  useEffect(() => {
-    const getProductById = async () => {
-      if (id && products) {
-        const product: IProductItem[] = await products.filter(
-          (product) => product.id === id
-        );
-        setNameProduct(product[0].name);
-        setCategoryProduct(product[0].categoryId);
-        setRatingProduct(`${product[0].rating}`);
-        setPriceProduct(`${product[0].price}`);
-        setImageProduct(product[0].thumbnail_cdn);
-      }
-    };
-    getProductById();
-  }, []);
+  // useEffect(() => {
+  //   if (!categories) {
+  //     dispatch(getCategories());
+  //   }
+  // }, [categories]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(
+      addProduct({
+        name: nameProduct,
+        category_id: categoryProduct,
+        rating: ratingProduct,
+        price: priceProduct,
+        thumbnail_cdn: imageProduct[0].originFileObj,
+      })
+    );
+
+    // console.log(imageProduct[0].originFileObj);
+
+    history.push("/admin/product");
+  };
 
   return (
     <Form
@@ -88,9 +93,9 @@ const EditProductModal = () => {
           // value={categoryProduct}
           onChange={(e) => setCategoryProduct(e)}
         >
-          <Option value="0">a</Option>
-          <Option value="1">b</Option>
-          <Option value="2">c</Option>
+          {categories.map((category) => (
+            <Option value={category._id}>{category.name}</Option>
+          ))}
         </Select>
       </Form.Item>
 
@@ -126,12 +131,7 @@ const EditProductModal = () => {
         getValueFromEvent={normFile}
         extra=""
       >
-        <Image width={80} src={imageProduct} />
-        <Upload
-          name="logo"
-          listType="picture"
-          onChange={(e: any) => setImageProduct(e.file.name)}
-        >
+        <Upload name="thumbnail_cdn" listType="picture">
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>
@@ -145,4 +145,4 @@ const EditProductModal = () => {
   );
 };
 
-export default EditProductModal;
+export default AddProductForm;
