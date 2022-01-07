@@ -50,7 +50,7 @@ const ProductItemDetail = () => {
             <div className="col-4">
               {itemProduct && (
                 <Image
-                  src={`http://localhost:6969/api/product/photo/${itemProduct._id}`}
+                  src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${itemProduct._id}`}
                 />
               )}
             </div>
