@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: "https://server-minimalistic-ecommerce.herokuapp.com/api",
+  baseURL: process.env.REACT_APP_BASE_API_URL,
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

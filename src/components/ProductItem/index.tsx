@@ -18,7 +18,7 @@ const ProductItem = ({ data, categories }: Props) => {
         <div className="product__img">
           <Link to={`/${data.slug}.${data._id}`}>
             <img
-              src={`http://localhost:6969/api/product/photo/${data._id}`}
+              src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${data._id}`}
               alt="image"
             />
           </Link>

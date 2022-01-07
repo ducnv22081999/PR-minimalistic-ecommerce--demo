@@ -16,6 +16,8 @@ function App() {
   useEffect(() => {
     dispatch(getProductList());
     dispatch(getCategories());
+
+    console.log(process.env.REACT_APP_BASE_API_URL);
   }, []);
 
   return (
