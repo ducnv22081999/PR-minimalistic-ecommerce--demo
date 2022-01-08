@@ -59,7 +59,7 @@ const AdminProduct = (props: any) => {
       render: (_id: string) => (
         <Image
           width={80}
-          src={`http://localhost:6969/api/product/photo/${_id}`}
+          src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${_id}`}
         />
       ),
     },
