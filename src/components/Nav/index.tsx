@@ -30,19 +30,24 @@ const Nav = () => {
                   style={{ maxHeight: 100 }}
                 >
                   <li className="nav-item menu__item">
-                    <a className="nav-link" href="#">
+                    <Link to="/" className="nav-link">
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item menu__item">
-                    <a className="nav-link" href="#">
+                    <Link to="/" className="nav-link">
                       Shop
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item menu__item">
-                    <a className="nav-link" href="#">
+                    <Link to="/" className="nav-link">
                       Magazine
-                    </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item menu__item">
+                    <Link to="/admin/product" className="nav-link">
+                      Admin
+                    </Link>
                   </li>
                 </ul>
                 <div className="d-flex">
