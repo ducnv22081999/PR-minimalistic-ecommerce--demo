@@ -1,6 +1,5 @@
 import "./ProductItem.css";
 import addCartButton from "./../assets/img/add-to-cart-button.png";
-import product1 from "./../assets/img/product1.png";
 import { IProductItem } from "../../redux/productSlice";
 import { getNameCateFromId, ICategoryItem } from "../../redux/categorySlice";
 import { Rate } from "antd";
@@ -17,10 +16,7 @@ const ProductItem = ({ data, categories }: Props) => {
       <div className="product__card">
         <div className="product__img">
           <Link to={`/${data.slug}.${data._id}`}>
-            <img
-              src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${data._id}`}
-              alt="image"
-            />
+            <img src={data.thumbnail_cdn} alt={data.slug} />
           </Link>
         </div>
         <div className="product__body">

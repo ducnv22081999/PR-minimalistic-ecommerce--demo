@@ -5,15 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../../redux/productSlice";
 import { useHistory } from "react-router-dom";
 import { getCategories, selectCategories } from "../../../redux/categorySlice";
-
-import { initializeApp } from "firebase/app";
-import {
-  getStorage,
-  uploadBytes,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { RcFile } from "antd/lib/upload/interface";
+import UploadProductAPI from "../../../api/uploadProductAPI";
 
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -36,55 +29,13 @@ const AddProductForm = () => {
     setRequiredMarkType(requiredMarkValue);
   };
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyC-6g7NQbxB6ncRrRnQCq-zRyStzjq2p1c",
-    authDomain: "cloud-minimalistic-ecomm-5fdda.firebaseapp.com",
-    projectId: "cloud-minimalistic-ecomm-5fdda",
-    storageBucket: "cloud-minimalistic-ecomm-5fdda.appspot.com",
-    messagingSenderId: "804946020776",
-    appId: "1:804946020776:web:31346cfe89641d5165759d",
-    measurementId: "G-LC81676J49",
-  };
-
-  const firebaseApp = initializeApp(firebaseConfig);
-
-  const storage = getStorage(firebaseApp);
-
-  // const uploadTask = storage
-  //   .ref(`images/${imageProduct[0].originFileObj.name}`)
-  //   .put(imageProduct[0].originFileObj);
-
-  // uploadTask.on(
-  //   "state_changed",
-  //   (snapshot) => {},
-  //   (error) => {
-  //     console.log(error);
-  //   },
-  //   () => {
-  //     storage
-  //       .ref("images")
-  //       .child(files.thumbnail_cdn.originalFilename)
-  //       .getDownloadUrl()
-  //       .then((url) => console.log(url));
-  //   }
-  // );
-
-  const normFile = (e: any) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    setImageProduct(e.fileList);
-    return e && e.fileList;
-  };
-
   const [nameProduct, setNameProduct] = useState("");
   const [categoryProduct, setCategoryProduct] = useState("");
   const [ratingProduct, setRatingProduct] = useState("");
   const [quantilyProduct, setQuantilyProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
-  const [imageProduct, setImageProduct] = useState<any>();
+  const [thumbnail_cdnProduct, setThumbnail_cdnProduct] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -106,13 +57,24 @@ const AddProductForm = () => {
         quantily: quantilyProduct,
         price: priceProduct,
         description: descriptionProduct,
-        thumbnail_cdn: imageProduct[0].originFileObj,
+        thumbnail_cdn: thumbnail_cdnProduct,
       })
     );
 
     // console.log(imageProduct[0].originFileObj);
 
-    // history.push("/admin/product");
+    history.push("/admin/product");
+  };
+
+  const handleUpload = async (file: RcFile, FileList: RcFile[]) => {
+    try {
+      const response = await UploadProductAPI.addImageProduct(file);
+      console.log("handle upload", file);
+      console.log("response", response.data);
+      setThumbnail_cdnProduct(response.data);
+    } catch (error) {
+      console.log("Lỗi ", error);
+    }
   };
 
   return (
@@ -187,14 +149,13 @@ const AddProductForm = () => {
         />
       </Form.Item>
 
-      <Form.Item
-        name="upload"
-        label="Upload"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-        extra=""
-      >
-        <Upload name="thumbnail_cdn" listType="picture">
+      <Form.Item name="upload" label="Upload" extra="">
+        <Upload
+          maxCount={1}
+          accept="image/*"
+          beforeUpload={handleUpload}
+          listType="picture-card"
+        >
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>

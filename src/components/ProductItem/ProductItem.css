@@ -5,6 +5,8 @@
 }
 .product__card .product__img img {
   width: 100%;
+  height: 400px;
+  object-fit: cover;
 }
 .product__body {
   padding: 12px 0;

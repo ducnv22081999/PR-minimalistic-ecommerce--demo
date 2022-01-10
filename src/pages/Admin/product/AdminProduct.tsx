@@ -54,13 +54,10 @@ const AdminProduct = (props: any) => {
     },
     {
       title: "Image",
-      dataIndex: "_id",
-      key: "_id",
-      render: (_id: string) => (
-        <Image
-          width={80}
-          src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${_id}`}
-        />
+      dataIndex: "thumbnail_cdn",
+      key: "thumbnail_cdn",
+      render: (thumbnail_cdn: string) => (
+        <Image width={80} src={thumbnail_cdn} />
       ),
     },
     {

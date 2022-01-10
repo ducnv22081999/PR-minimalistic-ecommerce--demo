@@ -10,6 +10,8 @@ import {
 } from "../../../redux/productSlice";
 import { useHistory, useParams } from "react-router-dom";
 import { selectCategories } from "../../../redux/categorySlice";
+import { RcFile } from "antd/lib/upload";
+import UploadProductAPI from "../../../api/uploadProductAPI";
 
 type RequiredMark = boolean | "optional";
 
@@ -45,6 +47,7 @@ const EditProductForm = () => {
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
   const [imageProduct, setImageProduct] = useState<any>();
+  const [thumbnail_cdnProduct, setThumbnail_cdnProduct] = useState("");
 
   interface IId {
     id: string;
@@ -60,16 +63,14 @@ const EditProductForm = () => {
   useEffect(() => {
     const getProductById = async () => {
       if (id && productList) {
-        const product: IProductItem[] = await productList.filter(
-          (product) => product._id === id
-        );
-        setNameProduct(product[0].name);
-        setCategoryProduct(product[0].category_id);
-        setRatingProduct(product[0].rating);
-        setQuantilyProduct(product[0].quantily);
-        setPriceProduct(product[0].price);
-        setDescriptionProduct(product[0].description);
-        // setImageProduct(product[0].thumbnail_cdn);
+        const product = await productList.find((product) => product._id === id);
+        setNameProduct(product ? product.name : "");
+        setCategoryProduct(product ? product.category_id : "");
+        setRatingProduct(product ? product.rating : "");
+        setQuantilyProduct(product ? product.quantily : "");
+        setPriceProduct(product ? product.price : "");
+        setDescriptionProduct(product ? product.description : "");
+        setThumbnail_cdnProduct(product ? product.thumbnail_cdn : "");
       }
     };
     if (productList) {
@@ -89,10 +90,21 @@ const EditProductForm = () => {
         quantily: quantilyProduct,
         price: priceProduct,
         description: descriptionProduct,
-        thumbnail_cdn: imageProduct,
+        thumbnail_cdn: thumbnail_cdnProduct,
       })
     );
     history.push("/admin/product");
+  };
+
+  const handleUpload = async (file: RcFile, FileList: RcFile[]) => {
+    try {
+      const response = await UploadProductAPI.addImageProduct(file);
+      console.log("handle upload", file);
+      console.log("response", response.data);
+      setThumbnail_cdnProduct(response.data);
+    } catch (error) {
+      console.log("Lỗi ", error);
+    }
   };
 
   return (
@@ -169,18 +181,14 @@ const EditProductForm = () => {
         />
       </Form.Item>
 
-      <Form.Item
-        name="upload"
-        label="Upload"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-        extra=""
-      >
-        <Image
-          width={80}
-          src={`http://localhost:6969/api/product/photo/${id}`}
-        />
-        <Upload name="logo" listType="picture">
+      <Form.Item name="upload" label="Upload">
+        <Image width={80} src={thumbnail_cdnProduct} />
+        <Upload
+          maxCount={1}
+          accept="image/*"
+          beforeUpload={handleUpload}
+          listType="picture-card"
+        >
           <Button icon={<UploadOutlined />}>Click to upload</Button>
         </Upload>
       </Form.Item>

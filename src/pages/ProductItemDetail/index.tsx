@@ -49,9 +49,7 @@ const ProductItemDetail = () => {
           <div className="row">
             <div className="col-4">
               {itemProduct && (
-                <Image
-                  src={`${process.env.REACT_APP_BASE_API_URL}/product/photo/${itemProduct._id}`}
-                />
+                <Image src={itemProduct.thumbnail_cdn} alt={itemProduct.slug} />
               )}
             </div>
             <div className="col-8">
