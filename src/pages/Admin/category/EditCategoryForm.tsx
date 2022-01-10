@@ -41,10 +41,10 @@ const EditCategoryForm = () => {
   useEffect(() => {
     const getProductById = async () => {
       if (id && categories) {
-        const categoryList: ICategoryItem[] = await categories.filter(
+        const category = await categories.find(
           (category) => category._id === id
         );
-        setNameCategory(categoryList[0].name);
+        setNameCategory(category ? category.name : "");
       }
     };
 
